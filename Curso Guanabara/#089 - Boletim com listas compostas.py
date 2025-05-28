@@ -5,4 +5,4 @@ Crie um programa que leia nome e duas notas de vários alunos e guarde tudo em u
 notas = []
 
 while True:
-    
+    print(notas)
