@@ -4,7 +4,7 @@ Aprimore o desafio 93 para que ele funcione com vários jogadores, incluindo um 
 jogadores = []
 
 while True:
-    dados = {}  # Cria um novo dicionário a cada iteração
+    dados = {}
     dados['nome'] = input('Nome do jogador: ')
     partidas = int(input(f'Quantas partidas {dados["nome"]} jogou? '))
     
@@ -15,7 +15,7 @@ while True:
     dados['gols'] = gols
     dados['total'] = sum(gols)
     
-    jogadores.append(dados.copy())  # Adiciona uma cópia do dicionário à lista
+    jogadores.append(dados.copy())
     
     while True:
         continuar = input('Deseja continuar [S/N]: ').strip().upper()
@@ -37,7 +37,6 @@ for i, jogador in enumerate(jogadores):
         print(f'{str(v):<15}', end='')
     print()
 
-# Sistema de visualização de detalhes
 while True:
     busca = int(input('Mostrar dados de qual jogador? (999 para parar) '))
     if busca == 999:
