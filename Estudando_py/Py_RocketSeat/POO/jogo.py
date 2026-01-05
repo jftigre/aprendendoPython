@@ -35,6 +35,7 @@ class Personagem:
 
 
 class Heroi(Personagem):
+   
     def __init__(self, nome, vida, nivel, habilidade):
         super().__init__(nome, vida, nivel)
         self.__habilidade = habilidade
@@ -45,7 +46,14 @@ class Heroi(Personagem):
     def exibir_informacoes(self):
         return f"\n{super().exibir_informacoes()}Habilidade: {self.get_habilidade()}"
     
+    def ataque_especial(self, alvo):
+        dano = self.get_nivel() * 7
+        alvo.receber_ataque(dano)
+        print(f"\n{self.get_nome()} usou habilidade especial e causou {dano} de dano em {alvo.get_nome()}")
+
+    
 class Inimigo(Personagem):
+   
     def __init__(self, nome, vida, nivel, tipo):
         super().__init__(nome, vida, nivel)
         self.__tipo = tipo
@@ -55,6 +63,8 @@ class Inimigo(Personagem):
 
     def exibir_informacoes(self):
         return f"{super().exibir_informacoes()}Tipo: {self.get_tipo()}\n"
+    
+
 
 class Jogo:
     '''Classe orquestradora do jogo'''
@@ -80,10 +90,14 @@ class Jogo:
 
             if escolha == '1':
                 self.heroi.ataque(self.inimigo)
-            
+            elif escolha == '2':
+                self.heroi.ataque_especial(self.inimigo)
             else:
                 print("Escolha inválida. Selecione uma opção válida")
 
+            if self.inimigo.get_vida() > 0:
+                #Ataque do inimigo
+                self.inimigo.ataque(self.heroi)
 
         if self.heroi.get_vida() > 0:
             print(f"\nParabéns, {self.heroi.get_nome()}. Você ganhou!")
