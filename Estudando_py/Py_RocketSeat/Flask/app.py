@@ -11,7 +11,7 @@ task_id_control = 1
 def create_task():
   global task_id_control
   data = request.get_json()
-  new_task = Task(id='task_id_control', title=data['title'], description=data.get("description", ""))
+  new_task = Task(id=task_id_control, title=data['title'], description=data.get("description", ""))
   task_id_control += 1
   tasks.append(new_task)
   print(tasks)
@@ -30,13 +30,34 @@ def get_tasks():
             }
   return jsonify(output)
 
-@app.route('/tasks/<int:id_task>', methods=['GET'])
+@app.route('/tasks/<int:id>', methods=['GET'])
 
-def get_task(id_task):
+def get_task(id):
   for t in tasks:
-    if t.id == id_task:
+    if t.id == id:
       return jsonify(t.to_dict())
   return jsonify({"mensage": "Não foi possível encontrar a atividade"}), 404
 
+@app.route('/tasks/<int:id>', methods=["PUT"])
+
+def uptade_task(id):
+  
+  task = None
+  for t in tasks:
+    if t.id == id:
+      task = t
+  print(task)
+
+  if task == None:
+    return jsonify({"message": "Não foi possível encontrar a atividade"}), 404
+  
+  data = request.get_json()
+  task.title = data['title']
+  task.description = data['description']
+  task.completed = data['completed']
+  print(task)
+  return jsonify({"message": "Tarefa atualizada com sucesso!"})
+
+
 if __name__ == "__main__": #Trava de segurança
-  app.run(debug=True) 
+ app.run(debug=True) 
